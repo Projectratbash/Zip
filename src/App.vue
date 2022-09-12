@@ -7,14 +7,11 @@
   <!-- header end  -->
 
 
-
-
-
   <!-- navbar start -->
   
   <div id="create-section">
       <div id="nav">
-        <button @click="formClicked = true"> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
+        <button @click="formClicked = true, removeInputs(), updateField = false "> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
           <button id="zip-padding" class="bold"> ZIP website </button>
           <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
@@ -22,9 +19,6 @@
       </div>
     </div>
  <!-- navbar end -->
-
-
-
 
 
 
@@ -49,9 +43,9 @@
 
 
 
-<br v-if="UD">
+<br v-if="updateField">
   <!-- update docutment section start -->
-  <div class="flexCenter" v-if="UD">
+  <div class="flexCenter" v-if="updateField">
     <div id="updateInfo">
       <h3>Edit New post</h3>
     <br>
@@ -62,12 +56,12 @@
 
     <div class="formBtnFlex">
 
-    <button class="formBtn black" @click="UD = false"> Cancel</button>
+    <button class="formBtn black" @click="updateField = false"> Cancel</button>
 
-    <button @click="updateDoc(), UD=false" class="formBtn blue"> Save changes </button>
+    <button @click="updateDoc(),  updateField=false" class="formBtn blue"> Save changes </button>
     </div>
 
-    <button @click="deleteDoc(id), UD=false" class="formBtn red"> Delete </button>
+    <button @click="deleteDoc(id), updateField=false" class="formBtn red"> Delete </button>
 
     <br>
   </div>
@@ -85,7 +79,7 @@
     <li v-for="profile in profiles" class="grid-list">
       <div class="postersName">
         <h3 class="proxima">Guy Nameson</h3>
-        <button class="pencil" @click="getDoc(profile._id), UD = true "> <img class="pencil"
+        <button class="pencil" @click="getDoc(profile._id), updateField = true, formClicked = false "> <img class="pencil"
             src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
       </div>
       <p class="proxima"> {{profile.location}} </p>
@@ -135,9 +129,6 @@
 
 
 
-
-
-
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
 
@@ -145,8 +136,8 @@ export default {
   data() {
     return {
       formClicked: false,
-      //UD is a placeholder to help style and turn things on and off, needs to be deleted later when components are made//
-      UD: false, 
+      //updateField is a placeholder to help style and turn things on and off, needs to be deleted later when components are made//
+      updateField: false, 
       profiles: [],
       id: "",
       formValues: {
