@@ -11,7 +11,7 @@
   
   <div id="create-section">
       <div id="nav">
-        <button @click="formClicked = true, removeInputs(), updateField = false "> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
+        <button @click="formClicked = true, updateField = false "> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
           <button id="zip-padding" class="bold"> ZIP website </button>
           <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
@@ -23,12 +23,7 @@
 
 
  <!-- create new post start -->
-
- <!--Vic Component-->
- <post :formClicked="this.formClicked" :editState="this.editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/>
-
-
-      <!-- <div v-if="formClicked" id="updateInfo">
+      <div v-if="formClicked" id="updateInfo">
         <h3>Create new post</h3>
 
         <input type="text" placeholder="Title" v-model="formValues.title">
@@ -39,7 +34,7 @@
         <button @click="formClicked = false" class="formBtn black"> Cancel </button>
         </div>
 
-      </div>    -->
+      </div>   
   <!-- end of create new post ection -->
 
 
@@ -63,7 +58,7 @@
 
     <button class="formBtn black" @click="updateField = false"> Cancel</button>
 
-    <button @click="updateDoc(),  updateField=false" class="formBtn blue"> Save changes </button>
+    <button @click="updateDoc(), updateField=false" class="formBtn blue"> Save changes </button>
     </div>
 
     <button @click="deleteDoc(id), updateField=false" class="formBtn red"> Delete </button>
@@ -136,159 +131,162 @@
 
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
-import post from './components/post.vue'
-import Post from './components/post.vue'
 
-
-export default { 
-    data() {
-        return {
-            formClicked: false,
-            //UD is a placeholder to help style and turn things on and off, needs to be deleted later when components are made//
-            UD: false,
-            profiles: [],
-            id: "",
-            formValues: {
-                username: "",
-                title: "",
-                imageUrl: "",
-                location: "",
-                comments: "",
-            }
-        };
-    },
-    components: post,
-    methods: {
-        //Post aka insert the item
-        insertDoc() {
-            fetch(api, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(this.formValues)
-            })
-                .then((response) => response.text())
-                .then((data) => {
-                console.log(data),
-                    this.getAll();
-                this.removeInputs();
-                this.formClicked = false;
-            })
-                .catch((err) => {
-                if (err)
-                    throw err;
-            });
-
+export default {
+  data() {
+    return {
+      formClicked: false,
+      //updateField is a placeholder to help style and turn things on and off, needs to be deleted later when components are made//
+      updateField: false, 
+      profiles: [],
+      id: "",
+      formValues: {
+        username: "",
+        title: "",
+        imageUrl: "",
+        location: "",
+        comments: "",
+      }
+    }
+  },
+  methods: {
+    //Post aka insert the item
+    insertDoc() {
+      fetch(api, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
         },
-        //Put aka update the item
-        updateDoc() {
-            fetch(api + this.id, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(this.formValues)
-            })
-                .then((response) => response.text())
-                .then((data) => {
-                console.log(data),
-                    this.getAll(),
-                    this.removeInputs();
-            })
-                .catch((err) => {
-                if (err)
-                    throw err;
-            });
-        },
-        //Get fetch aka find the item
-        getDoc(id) {
-            this.id = id;
-            fetch(api + id, {
-                method: "GET"
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                console.log(data);
-                this.formValues.title = data.title;
-                this.formValues.imageUrl = data.imageUrl;
-                this.formValues.location = data.location;
-            })
-                .catch((err) => {
-                if (err)
-                    throw err;
-            });
-        },
-        //Delete the item
-        deleteDoc(id) {
-            fetch(api + id, {
-                method: "DELETE",
-            })
-                .then((response) => response.text())
-                .then((data) => {
-                console.log(data),
-                    this.getAll();
-                this.removeInputs();
-            })
-                .catch((err) => {
-                if (err)
-                    throw err;
-            });
-        },
-        //Put aka update the item
-        updateComments() {
-            fetch(api + this.id, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(this.formValues)
-            })
-                .then((response) => response.text())
-                .then((data) => {
-                console.log(data),
-                    this.getAll();
-            })
-                .catch((err) => {
-                if (err)
-                    throw err;
-            });
-        },
-        getAll() {
-            fetch(api)
-                .then((response) => response.json())
-                .then((data) => {
-                this.profiles = data,
-                    this.getAll();
-            })
-                .catch((err) => {
-                if (err)
-                    throw err;
-            });
-        },
-        removeInputs() {
-            this.formValues.title = "";
-            this.formValues.imageUrl = "";
-            this.formValues.location = "";
-            this.formValues.replies = "";
-        },
-    },
-    mounted() {
-        fetch(api)
-            .then((response) => response.json())
-            .then((data) => {
-            this.profiles = data;
+        body: JSON.stringify(this.formValues)
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          console.log(data),
+            this.getAll();
+          this.removeInputs();
+          this.formClicked = false
         })
-            .catch((err) => {
-            if (err)
-                throw err;
-        });
+        .catch((err) => {
+          if (err) throw err;
+        })
     },
-    components: { Post }
-}
-</script> 
 
-<style >
+
+    //Put aka update the item
+    updateDoc() {
+      fetch(api + this.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.formValues)
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          console.log(data),
+            this.getAll(),
+            this.removeInputs();
+        })
+        .catch((err) => {
+          if (err) throw err;
+        })
+    },
+
+    //Get fetch aka find the item
+    getDoc(id) {
+      this.id = id
+      fetch(api + id, {
+        method: 'GET'
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          this.formValues.title = data.title
+          this.formValues.imageUrl = data.imageUrl
+          this.formValues.location = data.location
+          
+        })
+
+        .catch((err) => {
+          if (err) throw err;
+        })
+    },
+
+    //Delete the item
+    deleteDoc(id) {
+      fetch(api + id, {
+        method: "DELETE",
+      })
+
+        .then((response) => response.text())
+        .then((data) => {
+          console.log(data),
+            this.getAll();
+          this.removeInputs();
+
+        })
+        .catch((err) => {
+          if (err) throw err;
+        })
+
+
+    },
+
+
+    //Put aka update the item
+    updateComments() {
+      fetch(api + this.id,{
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.formValues)
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          console.log(data),
+            this.getAll()
+          
+        })
+        .catch((err) => {
+          if (err) throw err;
+        })
+    },
+
+    getAll() {
+      fetch(api)
+        .then((response) => response.json())
+        .then((data) => {
+          this.profiles = data,
+            this.getAll()
+        })
+        .catch((err) => {
+          if (err) throw err;
+        })
+    },
+
+    removeInputs() {
+      this.formValues.title = ""
+      this.formValues.imageUrl = ""
+      this.formValues.location = ""
+      this.formValues.replies = ""
+    },
+  },
+
+  mounted() {
+    fetch(api)
+      .then((response) => response.json())
+      .then((data) => {
+        this.profiles = data
+      })
+      .catch((err) => {
+        if (err) throw err;
+      })
+  }
+}
+</script>
+
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url("https://use.typekit.net/kjl5yqv.css");
 
