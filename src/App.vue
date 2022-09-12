@@ -20,7 +20,10 @@
     </div>
  <!-- navbar end -->
 
+
+ <!-- Vic's add a post section -->
 <post :formClicked="this.formClicked" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/>
+ <!-- Vic's add a post section end-->
 
 
 
