@@ -132,6 +132,8 @@
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
 
+import post from './components/post.vue'
+
 export default {
   data() {
     return {
@@ -281,8 +283,10 @@ export default {
       })
       .catch((err) => {
         if (err) throw err;
-      })
-  }
+      });
+  }, components: { post }
+
+
 }
 </script>
 
