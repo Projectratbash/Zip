@@ -23,7 +23,7 @@
 
 
  <!-- create new post start -->
-      <div v-if="formClicked" id="updateInfo">
+      <!-- <div v-if="formClicked" id="updateInfo">
         <h3>Create new post</h3>
 
         <input type="text" placeholder="Title" v-model="formValues.title">
@@ -34,7 +34,7 @@
         <button @click="formClicked = false" class="formBtn black"> Cancel </button>
         </div>
 
-      </div>   
+      </div>    -->
   <!-- end of create new post ection -->
 
 
