@@ -29,6 +29,8 @@
 
 
  <!-- create new post start -->
+
+ <!--Vic Component-->
  <post :formClicked="this.formClicked" :editState="this.editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/>
 
 
@@ -292,7 +294,7 @@ export default {
     },
     components: { Post }
 }
-</script>
+</script> 
 
 <style >
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');

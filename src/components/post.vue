@@ -1,3 +1,6 @@
+<!--post component-->
+
+
 <template>
  <!-- create new post start -->
  <div v-if="formClicked" id="updateInfo">
