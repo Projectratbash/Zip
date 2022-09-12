@@ -303,8 +303,7 @@ export default {
   background-color: white
 }
 #zip-padding {
-  margin-right: 3vw;
-}
+  margin-right: 3vw;}
 
 
 /* black div styling */
@@ -513,6 +512,8 @@ padding: 0;}
     grid-gap: 1.5em;
     padding: 0%;
   }
+
+  li{border-radius: 0px;}
 
   li img {
     width: 100%;
