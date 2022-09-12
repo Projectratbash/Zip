@@ -11,7 +11,7 @@
   
   <div id="create-section">
       <div id="nav">
-        <button @click="formClicked = true, updateField = false "> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
+        <button @click="formClicked = true, updateField = false, removeInputs()"> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
           <button id="zip-padding" class="bold"> ZIP website </button>
           <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
@@ -20,7 +20,7 @@
     </div>
  <!-- navbar end -->
 
-
+<post :formClicked="this.formClicked" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/>
 
  <!-- create new post start -->
       <!-- <div v-if="formClicked" id="updateInfo">
@@ -36,6 +36,8 @@
 
       </div>    -->
   <!-- end of create new post ection -->
+
+
 
 
 
@@ -231,7 +233,6 @@ export default {
           if (err) throw err;
         })
 
-
     },
 
 
@@ -290,7 +291,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url("https://use.typekit.net/kjl5yqv.css");
 
