@@ -146,6 +146,7 @@ const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
 import post from './components/post.vue'
 import Post from './components/post.vue'
 
+
 export default {
     data() {
         return {
@@ -166,7 +167,7 @@ export default {
     components: post,
     methods: {
         //Post aka insert the item
-        insertDoc() { 
+        insertDoc() {
             fetch(api, {
                 method: "POST",
                 headers: {

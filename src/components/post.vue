@@ -23,10 +23,10 @@
             formClicked: Boolean,
             formValues: Object
         },
-        method: {
+        methods: {
         insertDoc(){
             this.$emit("call-insertDoc")
-          
+           
         }
     }
     }
