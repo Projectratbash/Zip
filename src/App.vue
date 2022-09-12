@@ -6,6 +6,10 @@
   </div>
   <!-- header end  -->
 
+
+
+
+
   <!-- navbar start -->
   
   <div id="create-section">
@@ -18,6 +22,11 @@
       </div>
     </div>
  <!-- navbar end -->
+
+
+
+
+
 
  <!-- create new post start -->
       <div v-if="formClicked" id="updateInfo">
@@ -33,6 +42,12 @@
 
       </div>   
   <!-- end of create new post ection -->
+
+
+
+
+
+
 
 <br v-if="UD">
   <!-- update docutment section start -->
@@ -61,6 +76,10 @@
 
 
 
+
+
+
+
 <!-- list items section loop start -->
   <ul>
     <li v-for="profile in profiles" class="grid-list">
@@ -76,21 +95,33 @@
       <!-- <button @click="deleteDoc(profile._id)"> Delete </button> -->
       <img :src="profile.imageUrl" alt="">
       <br>
-
       
         <br>
+
+
+
+
+
+<!-- test -->
+
+<!-- test -->
+
+
+
+
 <!-- comments section start -->
         <div class="reply-parent">
           <h5> </h5>
           <p class="replies"> <span class="bold"> Kate Marshall </span>
-            <br> This is a comments placeholder
-            {{profile.comments}}
-          </p>
-
+            <br> {{profile.comments}} </p>
         </div>
+
+
         <div id="replyToComment">
-          <input class="replies" v-model="formValues.comments" id="replyCommentBox" type="text" placeholder="Reply" @click="updateComments()">
-          <button class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt=""></button>
+          <input class="replies" v-model="formValues.comments" id="replyCommentBox"
+          type="text" placeholder="Reply" >
+
+          <button  @click="getDoc(profile._id), updateDoc()"   class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt=""></button>
           <br>
         </div>
         <!-- comments section end -->
@@ -100,6 +131,12 @@
   <!-- list items loop end -->
 
 </template>
+
+
+
+
+
+
 
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
@@ -176,6 +213,7 @@ export default {
           this.formValues.title = data.title
           this.formValues.imageUrl = data.imageUrl
           this.formValues.location = data.location
+          
         })
 
         .catch((err) => {
@@ -206,7 +244,7 @@ export default {
 
     //Put aka update the item
     updateComments() {
-      fetch(api + this.id, {
+      fetch(api + this.id,{
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
@@ -216,8 +254,8 @@ export default {
         .then((response) => response.text())
         .then((data) => {
           console.log(data),
-            this.getAll(),
-            this.removeInputs();
+            this.getAll()
+          
         })
         .catch((err) => {
           if (err) throw err;
@@ -240,6 +278,7 @@ export default {
       this.formValues.title = ""
       this.formValues.imageUrl = ""
       this.formValues.location = ""
+      this.formValues.replies = ""
     },
   },
 
