@@ -27,7 +27,7 @@
 
         <input type="text" placeholder="Title" v-model="formValues.title">
         <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
-        <input type="text" placeholder="ImageUrl" v-model="formValues.location">
+        <input type="text" placeholder="Location" v-model="formValues.location">
         <div class="formBtnFlex">
         <button @click="insertDoc(), mainContentPosts=true" class="formBtn blue "> Post </button>
         <button @click="createNewActive = false, mainContentPosts=true" class="formBtn black"> Cancel </button>
