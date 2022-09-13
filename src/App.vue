@@ -1,19 +1,19 @@
 <template>
+
   <!-- header start -->
-  <div id="header">
-    <img src="./assets/ZIP_Logo_Final_Full+Version+WHITE.png" alt=""> -->
+  <!-- <div id="header">
+    <img src="./assets/ZIP_Logo_Final_Full+Version+WHITE.png" alt=""> --> 
     <!-- <h3> Profile count: {{profiles.length}}</h3> -->
-  </div>
+  <!-- </div> -->
   <!-- header end  -->
 
 
   <!-- navbar start -->
-  
   <div id="create-section">
       <div id="nav">
         <button @click="formClicked = true, updateField = false, removeInputs()"> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
-          <button id="zip-padding" class="bold"> ZIP website </button>
+          <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
           <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
         </div>
       </div>
@@ -24,8 +24,6 @@
  <!-- Vic's add a post section -->
 <post :formClicked="this.formClicked" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/>
  <!-- Vic's add a post section end-->
-
-
 
 <br v-if="updateField">
   <!-- update docutment section start -->
@@ -303,7 +301,8 @@ export default {
   background-color: white
 }
 #zip-padding {
-  margin-right: 3vw;}
+  margin-right: 3vw;
+padding-left: 30px;}
 
 
 /* black div styling */
@@ -422,10 +421,9 @@ li img {
   border: none;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
-  padding: 0;
   display: flex;
   align-items: center;
-  padding: 5px
+  padding: 5px 8px 5px 8px
 }
 
 #create-section img {
