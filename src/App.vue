@@ -1,4 +1,5 @@
 <template>
+
   <!-- header start -->
   <headerComp />
   <!-- <div id="header">
@@ -9,12 +10,11 @@
 
 
   <!-- navbar start -->
-  
   <div id="create-section">
       <div id="nav">
         <button @click="formClicked = true, updateField = false, removeInputs()"> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
-          <button id="zip-padding" class="bold"> ZIP website </button>
+          <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
           <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
         </div>
       </div>
@@ -25,8 +25,6 @@
  <!-- Vic's add a post section -->
 <post :formClicked="this.formClicked" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/>
  <!-- Vic's add a post section end-->
-
-
 
 <br v-if="updateField">
   <!-- update docutment section start -->
@@ -61,7 +59,7 @@
 
 <!-- list items section loop start -->
   <ul>
-    <li v-for="profile in profiles" class="grid-list">
+    <li v-for="profile, index in profiles" :key=index class="grid-list">
       <div class="postersName">
         <h3 class="proxima">Guy Nameson</h3>
         <button class="pencil" @click="getDoc(profile._id), updateField = true, formClicked = false "> <img class="pencil"
@@ -305,9 +303,8 @@ export default {
   background-color: white
 }
 #zip-padding {
-  padding: 0px 10px 0px 10px;
   margin-right: 3vw;
-}
+padding-left: 30px;}
 
 
 /* black div styling */
@@ -426,10 +423,9 @@ li img {
   border: none;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
-  padding: 0;
   display: flex;
   align-items: center;
-  padding: 5px
+  padding: 5px 8px 5px 8px
 }
 
 #create-section img {
