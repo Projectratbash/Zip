@@ -28,7 +28,7 @@
 
 <br v-if="updateField">
   <!-- update docutment section start -->
-  <div class="flexCenter" v-if="updateField">
+  <!-- <div class="flexCenter" v-if="updateField">
     <div id="updateInfo">
       <h3>Edit New post</h3>
     <br>
@@ -48,7 +48,7 @@
 
     <br>
   </div>
-</div>
+</div> -->
 <!-- update docutment section end -->
 
 
