@@ -2,10 +2,6 @@
 
   <!-- header start -->
   <headerComp />
-  <!-- <div id="header">
-    <img src="./assets/ZIP_Logo_Final_Full+Version+WHITE.png" alt=""> -->
-    <!-- <h3> Profile count: {{profiles.length}}</h3> -->
-  <!-- </div> -->
   <!-- header end  -->
 
 
@@ -23,7 +19,19 @@
 
 
  <!-- Vic's add a post section -->
-<post :formClicked="this.formClicked" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/>
+<!-- <post :formClicked="this.formClicked" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/> -->
+<div v-if="formClicked" id="updateInfo">
+        <h3>Create new post</h3>
+
+        <input type="text" placeholder="Title" v-model="formValues.title">
+        <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
+        <input type="text" placeholder="ImageUrl" v-model="formValues.location">
+        <div class="formBtnFlex">
+        <button @click="insertDoc" class="formBtn blue "> Post </button>
+        <button @click="formClicked = false" class="formBtn black"> Cancel </button>
+        </div>
+
+      </div>   
  <!-- Vic's add a post section end-->
 
 <br v-if="updateField">
@@ -47,8 +55,8 @@
     <button @click="deleteDoc(id), updateField=false" class="formBtn red"> Delete </button>
 
     <br>
-  </div> -->
-</div> -->
+  </div> 
+</div> 
 <!-- update docutment section end -->
 
 
