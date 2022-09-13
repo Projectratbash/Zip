@@ -8,7 +8,7 @@
   <!-- navbar start -->
   <div id="create-section">
       <div id="nav">
-        <button @click="formClicked = true, updateField = false, removeInputs()"> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
+        <button @click="createNewActive = true, updateFieldActive = false, mainContentPosts=false, removeInputs()"> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
           <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
           <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
@@ -19,26 +19,28 @@
 
 
  <!-- Vic's add a post section -->
-<!-- <post :formClicked="this.formClicked" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/> -->
-<div v-if="formClicked" id="updateInfo">
+<!-- <post :createNewActive="this.createNewActive" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/> -->
+
+<div v-if="createNewActive" class="flexCenter">
+  <div class="mainFormStyling">
         <h3>Create new post</h3>
 
         <input type="text" placeholder="Title" v-model="formValues.title">
         <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
         <input type="text" placeholder="ImageUrl" v-model="formValues.location">
         <div class="formBtnFlex">
-        <button @click="insertDoc" class="formBtn blue "> Post </button>
-        <button @click="formClicked = false" class="formBtn black"> Cancel </button>
+        <button @click="insertDoc(), mainContentPosts=true" class="formBtn blue "> Post </button>
+        <button @click="createNewActive = false, mainContentPosts=true" class="formBtn black"> Cancel </button>
         </div>
-
+</div>
       </div>   
- <!-- Vic's add a post section end-->
+ <!--add a post section end-->
 
-<br v-if="updateField">
+
   <!-- update docutment section start -->
-  <div class="flexCenter" v-if="updateField">
-    <div id="updateInfo">
-      <h3>Edit New post</h3>
+  <div class="flexCenter" v-if="updateFieldActive">
+    <div class="mainFormStyling">
+      <h3>Edit post</h3>
     <br>
 
     <input type="text" placeholder="Title" v-model="formValues.title">
@@ -47,12 +49,12 @@
 
     <div class="formBtnFlex">
 
-    <button class="formBtn black" @click="updateField = false"> Cancel</button>
+    <button class="formBtn black" @click="updateFieldActive = false, mainContentPosts=true"> Cancel</button>
 
-    <button @click="updateDoc(), updateField=false" class="formBtn blue"> Save changes </button>
+    <button @click="updateDoc(), updateFieldActive=false" class="formBtn blue"> Save changes </button>
     </div>
 
-    <button @click="deleteDoc(id), updateField=false" class="formBtn red"> Delete </button>
+    <button @click="deleteDoc(id), updateFieldActive=false" class="formBtn red"> Delete </button>
 
     <br>
   </div> 
@@ -66,11 +68,12 @@
 
 
 <!-- list items section loop start -->
-  <ul>
+  <ul v-if="mainContentPosts">
     <li v-for="profile, index in profiles" :key=index class="grid-list">
       <div class="postersName">
         <h3 class="proxima">Guy Nameson</h3>
-        <button class="pencil" @click="getDoc(profile._id), updateField = true, formClicked = false "> <img class="pencil"
+        <button class="pencil" @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
+           <img class="pencil"
             src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
       </div>
       <p class="proxima"> {{profile.location}} </p>
@@ -82,16 +85,6 @@
       <br>
       
         <br>
-
-
-
-
-
-<!-- test -->
-
-<!-- test -->
-
-
 
 
 <!-- comments section start -->
@@ -123,15 +116,15 @@
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
 
-import post from './components/post.vue'
+// import post from './components/post.vue'
 import headerComp from './components/headerComp.vue'
 
 export default {
   data() {
     return {
-      formClicked: false,
-      //updateField is a placeholder to help style and turn things on and off, needs to be deleted later when components are made//
-      updateField: false, 
+      mainContentPosts: true,
+      createNewActive: false,
+      updateFieldActive: false, 
       profiles: [],
       id: "",
       formValues: {
@@ -158,7 +151,7 @@ export default {
           console.log(data),
             this.getAll();
           this.removeInputs();
-          this.formClicked = false
+          this.createNewActive = false
         })
         .catch((err) => {
           if (err) throw err;
@@ -225,33 +218,13 @@ export default {
 
     },
 
-
-    //Put aka update the item
-    updateComments() {
-      fetch(api + this.id,{
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.formValues)
-      })
-        .then((response) => response.text())
-        .then((data) => {
-          console.log(data),
-            this.getAll()
-          
-        })
-        .catch((err) => {
-          if (err) throw err;
-        })
-    },
-
     getAll() {
       fetch(api)
         .then((response) => response.json())
         .then((data) => {
           this.profiles = data,
-            this.getAll()
+            // this.getAll()
+            this.mainContentPosts = true
         })
         .catch((err) => {
           if (err) throw err;
@@ -275,7 +248,7 @@ export default {
       .catch((err) => {
         if (err) throw err;
       });
-  }, components: { post, headerComp }
+  }, components: { headerComp }
 
 
 }
@@ -442,7 +415,7 @@ li img {
 
 
 /* update information section */
-#updateInfo{
+.mainFormStyling{
   background-color: #ffffff;
   border: rgba(25, 134, 163, 1) solid 4px;
   border-radius: 15px;
@@ -456,7 +429,7 @@ li img {
   align-items: center;
 }
 
-#updateInfo input{
+.mainFormStyling input{
   border: rgba(25, 134, 163, 1) solid 2px;
   border-radius: 5px;
   margin: 20px 0 20px 0px;
@@ -504,6 +477,7 @@ padding: 0;}
   justify-content: center;
   margin: 0;
   padding: 0;
+  padding-top: 25px;
 }
 
 @media screen and (max-width: 900px) {
