@@ -1,9 +1,10 @@
 <template>
   <!-- header start -->
-  <div id="header">
+  <headerComp />
+  <!-- <div id="header">
     <img src="./assets/ZIP_Logo_Final_Full+Version+WHITE.png" alt=""> -->
     <!-- <h3> Profile count: {{profiles.length}}</h3> -->
-  </div>
+  <!-- </div> -->
   <!-- header end  -->
 
 
@@ -117,6 +118,7 @@
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
 
 import post from './components/post.vue'
+import headerComp from './components/headerComp.vue'
 
 export default {
   data() {
@@ -267,7 +269,7 @@ export default {
       .catch((err) => {
         if (err) throw err;
       });
-  }, components: { post }
+  }, components: { post, headerComp }
 
 
 }
@@ -303,7 +305,9 @@ export default {
   background-color: white
 }
 #zip-padding {
-  margin-right: 3vw;}
+  padding: 0px 10px 0px 10px;
+  margin-right: 3vw;
+}
 
 
 /* black div styling */
@@ -377,7 +381,7 @@ div {
 #nav {
   display: flex;
   flex-direction: row;
-  padding: 0 40px 0 40px;
+  padding: 0 28px 0 28px;
 
 }
 
@@ -500,10 +504,10 @@ padding: 0;}
 
 @media screen and (max-width: 900px) {
 
-  #header img {
+  /* #header img {
     max-height: 10vw;
     padding: 2vw 10vw 2vw 5vw;
-  }
+  } */
 
   ul {
     display: grid;
