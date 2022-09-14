@@ -96,10 +96,10 @@
 
 
         <div id="replyToComment">
-          <input class="replies" v-model="formValues.comments" id="replyCommentBox"
+          <input class="replies" id="replyCommentBox"
           type="text" placeholder="Reply" >
 
-          <button  @click="getDoc(profile._id), updateDoc()"   class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt=""></button>
+          <button class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt=""></button>
           <br>
         </div>
         <!-- comments section end -->
@@ -115,6 +115,9 @@
 
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
+
+// const api = "https://ratbashreply.netlify.app/.netlify/functions/api/"
+
 
 // import post from './components/post.vue'
 import headerComp from './components/headerComp.vue'
@@ -235,7 +238,6 @@ export default {
       this.formValues.title = ""
       this.formValues.imageUrl = ""
       this.formValues.location = ""
-      this.formValues.replies = ""
     },
   },
 
