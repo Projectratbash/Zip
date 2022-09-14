@@ -6,12 +6,12 @@
     <div id="logoContainer">
       <img src="src/assets/ZIPLogoCropped.png" alt="">
     </div>
-        
-    <div class="btnContainer">
+
+    <div v-if="!login" class="btnContainer" @click="login = true">
       <button class="loginBtn blue">Log in</button>
       <button class="loginBtn blue">Sign up</button>
     </div>
-    <div class="btnContainer">
+    <div v-if="login" class="btnContainer">
       <p id="loginText">Login</p>
       <input class="loginInput" placeholder="Username" type="text">
       <input class="loginInput" placeholder="Password" type="text">
@@ -19,7 +19,8 @@
     </div>
 
   </div>
-  <!--Login Template-->
+  <!--Login Template End-->
+
   <!-- header start -->
   <headerComp />
   <!-- header end  -->
@@ -27,103 +28,109 @@
 
   <!-- navbar start -->
   <div id="create-section">
-      <div id="nav">
-        <button @click="createNewActive = true, updateFieldActive = false, mainContentPosts=false, removeInputs()"> <img class="icons" src="./assets/plusIcon.svg" alt=""> </button>
-        <div id="nav-right">
-          <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
-          <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
-        </div>
+    <div id="nav">
+      <button @click="createNewActive = true, updateFieldActive = false, mainContentPosts=false, removeInputs()"> <img
+          class="icons" src="./assets/plusIcon.svg" alt=""> </button>
+      <div id="nav-right">
+        <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
+        <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
       </div>
     </div>
- <!-- navbar end -->
+  </div>
+  <!-- navbar end -->
 
 
- <!-- Vic's add a post section -->
-<!-- <post :createNewActive="this.createNewActive" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/> -->
+  <!-- Vic's add a post section -->
+  <!-- <post :createNewActive="this.createNewActive" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/> -->
 
-<div v-if="createNewActive" class="flexCenter">
-  <div class="mainFormStyling">
-        <h3>Create new post</h3>
+  <div v-if="createNewActive" class="flexCenter">
+    <div class="mainFormStyling">
+      <h3>Create new post</h3>
 
-        <input type="text" placeholder="Title" v-model="formValues.title">
-        <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
-        <input type="text" placeholder="Location" v-model="formValues.location">
-        <div class="formBtnFlex">
+      <input type="text" placeholder="Title" v-model="formValues.title">
+      <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
+      <input type="text" placeholder="Location" v-model="formValues.location">
+      <div class="formBtnFlex">
         <button @click="insertDoc(), mainContentPosts=true" class="formBtn blue "> Post </button>
         <button @click="createNewActive = false, mainContentPosts=true" class="formBtn black"> Cancel </button>
-        </div>
-</div>
-      </div>   
- <!--add a post section end-->
+      </div>
+    </div>
+  </div>
+  <!--add a post section end-->
 
 
   <!-- update docutment section start -->
   <div class="flexCenter" v-if="updateFieldActive">
     <div class="mainFormStyling">
       <h3>Edit post</h3>
-    <br>
+      <br>
 
-    <input type="text" placeholder="Title" v-model="formValues.title">
-    <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
-    <input type="text" placeholder="Location" v-model="formValues.location">
+      <input type="text" placeholder="Title" v-model="formValues.title">
+      <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
+      <input type="text" placeholder="Location" v-model="formValues.location">
 
-    <div class="formBtnFlex">
+      <div class="formBtnFlex">
 
-    <button class="formBtn black" @click="updateFieldActive = false, mainContentPosts=true"> Cancel</button>
+        <button class="formBtn black" @click="updateFieldActive = false, mainContentPosts=true"> Cancel</button>
 
-    <button @click="updateDoc(), updateFieldActive=false" class="formBtn blue"> Save changes </button>
+        <button @click="updateDoc(), updateFieldActive=false" class="formBtn blue"> Save changes </button>
+      </div>
+
+      <button @click="deleteDoc(id), updateFieldActive=false" class="formBtn red"> Delete </button>
+
+      <br>
     </div>
+  </div>
+  <!-- update docutment section end -->
 
-    <button @click="deleteDoc(id), updateFieldActive=false" class="formBtn red"> Delete </button>
-
-    <br>
-  </div> 
-</div> 
-<!-- update docutment section end -->
-
-
-
-
-
-
-
-<!-- list items section loop start -->
+  <!-- list items section loop start -->
   <ul v-if="mainContentPosts">
     <li v-for="profile in profiles" :key=index class="grid-list">
       <div class="postersName">
         <h3 class="proxima">Guy Nameson</h3>
-        <button class="pencil" @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
-           <img class="pencil"
-            src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
+        <button class="pencil"
+          @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
+          <img class="pencil" src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
       </div>
       <p class="proxima"> {{profile.location}} </p>
       <h2 class="proxima heavy-font"> {{profile.title}} </h2>
-     
+
 
       <!-- <button @click="deleteDoc(profile._id)"> Delete </button> -->
       <img :src="profile.imageUrl" alt="">
       <br>
-      
+
+      <br>
+
+
+      <!-- comments section start -->
+      <div class="reply-parent">
+
+
+        <ul>
+          <li v-for="reply in replies" :key=index class="grid-list">
+            {{reply.comment}}
+            <h5> </h5>
+            <p class="replies"> <span class="bold"> Kate Marshall </span> </p>
+
+          </li>
+        </ul>
+
+      </div>
+
+      <input type="text" placeholder="test" v-model="replyValues.comment">
+
+
+
+      <div id="replyToComment">
+        <input class="replies" id="replyCommentBox" type="text" placeholder="Reply">
+
+        <button @click="insertReply()" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
+            alt=""></button>
         <br>
+      </div>
+      <!-- comments section end -->
 
-
-<!-- comments section start -->
-        <div class="reply-parent">
-          <h5> </h5>
-          <p class="replies"> <span class="bold"> Kate Marshall </span>
-            <br> {{profile.comments}} </p>
-        </div>
-
-
-        <div id="replyToComment">
-          <input class="replies" id="replyCommentBox"
-          type="text" placeholder="Reply" >
-
-          <button class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt=""></button>
-          <br>
-        </div>
-        <!-- comments section end -->
-      
     </li>
   </ul>
   <!-- list items loop end -->
@@ -147,7 +154,8 @@ export default {
     return {
       mainContentPosts: true,
       createNewActive: false,
-      updateFieldActive: false, 
+      updateFieldActive: false,
+      login: false,
       profiles: [],
       id: "",
       formValues: {
@@ -156,6 +164,10 @@ export default {
         imageUrl: "",
         location: "",
         comments: "",
+      },
+      replies: [],
+      replyValues: {
+        comment: ""
       }
     }
   },
@@ -214,7 +226,7 @@ export default {
           this.formValues.title = data.title
           this.formValues.imageUrl = data.imageUrl
           this.formValues.location = data.location
-          
+
         })
 
         .catch((err) => {
@@ -259,6 +271,43 @@ export default {
       this.formValues.imageUrl = ""
       this.formValues.location = ""
     },
+
+
+
+    insertReply() {
+      fetch(replyApi, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.replyValues)
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          console.log(data),
+            this.getReplies();
+
+        })
+        .catch((err) => {
+          if (err) throw err;
+        })
+    },
+
+
+    getReplies() {
+      fetch(replyApi)
+        .then((response) => response.json())
+        .then((data) => {
+          this.replies = data
+          this.getReplies
+        })
+        .catch((err) => {
+          if (err) throw err;
+        })
+    },
+
+
+
   },
 
   mounted() {
@@ -266,6 +315,15 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.profiles = data
+      })
+      .catch((err) => {
+        if (err) throw err;
+      });
+
+    fetch(replyApi)
+      .then((response) => response.json())
+      .then((data) => {
+        this.replies = data
       })
       .catch((err) => {
         if (err) throw err;
@@ -292,10 +350,12 @@ export default {
   background-size: cover;
   background-position-y: bottom;
 }
+
 #loginContainer img {
   width: 70%;
-  margin:0 10px 27px 0;
+  margin: 0 10px 27px 0;
 }
+
 #logoContainer {
   display: flex;
   justify-content: center;
@@ -306,15 +366,19 @@ export default {
   border-radius: 50%;
   margin: 10vh 0 10vh 0;
 }
+
 #loginText {
   color: white;
   font-weight: 1000;
 }
-.btnContainer{
+
+.btnContainer {
   display: flex;
-  flex-direction: column;;
+  flex-direction: column;
+  ;
   align-items: center;
 }
+
 .loginBtn {
   color: white;
   border: none;
@@ -322,6 +386,7 @@ export default {
   border-radius: 5px;
   margin-bottom: 15px;
 }
+
 .loginInput {
   border: rgba(25, 134, 163, 1) solid 2px;
   border-radius: 5px;
@@ -329,6 +394,7 @@ export default {
   width: 80%;
   margin-bottom: 20px;
 }
+
 /* login css here for now */
 
 /* header section */
@@ -337,6 +403,7 @@ export default {
   padding-left: 0;
   margin-left: 0;
 }
+
 #header img {
   max-height: 5vw;
   padding: 1vw 5vw 1vw 5vw;
@@ -349,15 +416,18 @@ export default {
   border: none;
   background-color: white
 }
+
 .pencil {
   height: 18px;
   width: auto;
   border: none;
   background-color: white
 }
+
 #zip-padding {
   margin-right: 3vw;
-padding-left: 30px;}
+  padding-left: 30px;
+}
 
 
 /* black div styling */
@@ -410,6 +480,7 @@ div {
   padding: 5px 15px 5px 15px;
   border: none;
 }
+
 /* reply to posts styling */
 #replyToComment {
   display: flex;
@@ -419,7 +490,7 @@ div {
   justify-content: space-between;
 }
 
-#replyCommentBox{
+#replyCommentBox {
   width: 80%;
 }
 
@@ -451,11 +522,13 @@ ul {
   grid-gap: 1.5em;
   padding: 20px;
 }
+
 li {
   list-style: none;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
 }
+
 li img {
   width: 100%;
   height: 18vw;
@@ -487,7 +560,7 @@ li img {
 
 
 /* update information section */
-.mainFormStyling{
+.mainFormStyling {
   background-color: #ffffff;
   border: rgba(25, 134, 163, 1) solid 4px;
   border-radius: 15px;
@@ -501,49 +574,52 @@ li img {
   align-items: center;
 }
 
-.mainFormStyling input{
+.mainFormStyling input {
   border: rgba(25, 134, 163, 1) solid 2px;
   border-radius: 5px;
   margin: 20px 0 20px 0px;
- padding: 8px 20px 8px 20px;
- width: 80%;
+  padding: 8px 20px 8px 20px;
+  width: 80%;
 }
 
 /* form button styling */
-.red{
+.red {
   background-color: rgba(255, 90, 90, 1);
 }
 
 /* button styling */
-.black{
+.black {
   background-color: rgb(35, 35, 35);
 }
-.blue{
+
+.blue {
   background-color: rgba(25, 134, 163, 1)
 }
 
-.formBtn{
+.formBtn {
   color: white;
   border-radius: 5px;
   margin: 20px 0 20px 0px;
- padding: 8px 10px 8px 10px;
- width: 30%;
- border: none;
- font-size: 0.8rem;
+  padding: 8px 10px 8px 10px;
+  width: 30%;
+  border: none;
+  font-size: 0.8rem;
 }
 
-.formBtnFlex{
+.formBtnFlex {
   display: flex;
-flex-direction: row;
-justify-content: space-around;
-width: 100%;
-margin: 0;
-padding: 0;}
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 /* button styling end*/
 
 
 /* align items to center class*/
-.flexCenter{
+.flexCenter {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -567,7 +643,9 @@ padding: 0;}
     padding: 0%;
   }
 
-  li{border-radius: 0px;}
+  li {
+    border-radius: 0px;
+  }
 
   li img {
     width: 100%;
@@ -575,9 +653,10 @@ padding: 0;}
     object-fit: cover;
     padding-top: 0;
   }
-  .formBtn{
- width: 40%;
-}
+
+  .formBtn {
+    width: 40%;
+  }
 
 
 }
