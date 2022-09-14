@@ -112,7 +112,7 @@
     <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
       {{reply.comment}} </p>
       <p> {{profile._id}} </p>
-    <p> {{reply.post_id}} </p>
+    <p>{{reply.post_id}}</p>
   </li>
 </ul>
 
@@ -120,7 +120,7 @@
 <!-- comments section loop end -->
       <div id="replyToComment">
         <input class="replies" id="replyCommentBox" type="text" v-model="replyValues.comment">
-        <button @click="insertReply(), replyValues.post_id=this.profile._id" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
+        <button @click="insertReply(), reply.post_id=profile._id" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
             alt=""></button>
         <br>
       </div>
@@ -273,7 +273,15 @@ export default {
 
 
 
-    insertReply() {
+
+
+    // reply section methods
+
+
+    // reply section Post
+    insertReply(post_id) {
+      this.replyValues.post_id = post_id;
+
       fetch(replyApi, {
         method: "POST",
         headers: {
@@ -298,14 +306,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.replies = data
-          // this.getReplies
+     console.log(data)
         })
         .catch((err) => {
           if (err) throw err;
         })
     },
 
-    //Get fetch aka find the comments
+    //Get fetch aka find the replies
     getReplyDocs(id) {
       this.id = id
       fetch(replyApi + id, {
