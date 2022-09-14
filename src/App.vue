@@ -69,7 +69,7 @@
 
 <!-- list items section loop start -->
   <ul v-if="mainContentPosts">
-    <li v-for="profile, index in profiles" :key=index class="grid-list">
+    <li v-for="profile in profiles" :key=index class="grid-list">
       <div class="postersName">
         <h3 class="proxima">Guy Nameson</h3>
         <button class="pencil" @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
@@ -116,7 +116,7 @@
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
 
-// const api = "https://ratbashreply.netlify.app/.netlify/functions/api/"
+const replyApi = "https://ratbashreply.netlify.app/.netlify/functions/api/"
 
 
 // import post from './components/post.vue'
