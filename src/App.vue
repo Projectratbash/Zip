@@ -93,6 +93,7 @@
           <img class="pencil" src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
       </div>
       <p class="proxima"> {{profile.location}} </p>
+      {{profile._id}}
       <h2 class="proxima heavy-font"> {{profile.title}} </h2>
 
 
@@ -110,7 +111,7 @@
   <li v-for="reply in replies" :key=index class="grid-list">
     <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
       {{reply.comment}} </p>
-    
+      <p> {{profile._id}} </p>
     <p> {{reply.post_id}} </p>
   </li>
 </ul>
