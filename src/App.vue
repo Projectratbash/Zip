@@ -1,7 +1,7 @@
 <template>
 
   <!--Login Template-->
-  <div id="loginContainer">
+  <div v-if="!showMain" id="loginContainer">
 
     <div id="logoContainer">
       <img src="src/assets/ZIPLogoCropped.png" alt="">
@@ -15,121 +15,122 @@
       <p id="loginText">Login</p>
       <input class="loginInput" placeholder="Username" type="text">
       <input class="loginInput" placeholder="Password" type="text">
-      <button class="loginBtn blue">Log in</button>
+      <button class="loginBtn blue" @click="showMain = true">Log in</button>
     </div>
 
   </div>
   <!--Login Template End-->
 
-  <!-- header start -->
-  <headerComp />
-  <!-- header end  -->
+  <section v-if="showMain">
+    <!-- header declaration -->
+    <headerComp />
+    <!-- header declaration  -->
 
 
-  <!-- navbar start -->
-  <div id="create-section">
-    <div id="nav">
-      <button @click="createNewActive = true, updateFieldActive = false, mainContentPosts=false, removeInputs()"> <img
-          class="icons" src="./assets/plusIcon.svg" alt=""> </button>
-      <div id="nav-right">
-        <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
-        <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
+    <!-- navbar start -->
+    <div id="create-section">
+      <div id="nav">
+        <button @click="createNewActive = true, updateFieldActive = false, mainContentPosts=false, removeInputs()"> <img
+            class="icons" src="./assets/plusIcon.svg" alt=""> </button>
+        <div id="nav-right">
+          <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
+          <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- navbar end -->
+    <!-- navbar end -->
 
 
-  <!-- Vic's add a post section -->
-  <!-- <post :createNewActive="this.createNewActive" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/> -->
+    <!-- Vic's add a post section -->
+    <!-- <post :createNewActive="this.createNewActive" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/> -->
 
-  <div v-if="createNewActive" class="flexCenter">
-    <div class="mainFormStyling">
-      <h3>Create new post</h3>
+    <div v-if="createNewActive" class="flexCenter">
+      <div class="mainFormStyling">
+        <h3>Create new post</h3>
 
-      <input type="text" placeholder="Title" v-model="formValues.title">
-      <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
-      <input type="text" placeholder="Location" v-model="formValues.location">
-      <div class="formBtnFlex">
-        <button @click="insertDoc(), mainContentPosts=true" class="formBtn blue "> Post </button>
-        <button @click="createNewActive = false, mainContentPosts=true" class="formBtn black"> Cancel </button>
+        <input type="text" placeholder="Title" v-model="formValues.title">
+        <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
+        <input type="text" placeholder="Location" v-model="formValues.location">
+        <div class="formBtnFlex">
+          <button @click="insertDoc(), mainContentPosts=true" class="formBtn blue "> Post </button>
+          <button @click="createNewActive = false, mainContentPosts=true" class="formBtn black"> Cancel </button>
+        </div>
       </div>
     </div>
-  </div>
-  <!--add a post section end-->
+    <!--add a post section end-->
 
 
-  <!-- update docutment section start -->
-  <div class="flexCenter" v-if="updateFieldActive">
-    <div class="mainFormStyling">
-      <h3>Edit post</h3>
-      <br>
+    <!-- update docutment section start -->
+    <div class="flexCenter" v-if="updateFieldActive">
+      <div class="mainFormStyling">
+        <h3>Edit post</h3>
+        <br>
 
-      <input type="text" placeholder="Title" v-model="formValues.title">
-      <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
-      <input type="text" placeholder="Location" v-model="formValues.location">
+        <input type="text" placeholder="Title" v-model="formValues.title">
+        <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
+        <input type="text" placeholder="Location" v-model="formValues.location">
 
-      <div class="formBtnFlex">
+        <div class="formBtnFlex">
 
-        <button class="formBtn black" @click="updateFieldActive = false, mainContentPosts=true"> Cancel</button>
+          <button class="formBtn black" @click="updateFieldActive = false, mainContentPosts=true"> Cancel</button>
 
-        <button @click="updateDoc(), updateFieldActive=false" class="formBtn blue"> Save changes </button>
-      </div>
+          <button @click="updateDoc(), updateFieldActive=false" class="formBtn blue"> Save changes </button>
+        </div>
 
-      <button @click="deleteDoc(id), updateFieldActive=false" class="formBtn red"> Delete </button>
+        <button @click="deleteDoc(id), updateFieldActive=false" class="formBtn red"> Delete </button>
 
-      <br>
-    </div>
-  </div>
-  <!-- update docutment section end -->
-
-  <!-- list items section loop start -->
-  <ul v-if="mainContentPosts">
-    <li v-for="profile in profiles" :key=index class="grid-list">
-      <div class="postersName">
-        <h3 class="proxima">Guy Nameson</h3>
-        <button class="pencil"
-          @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
-          <img class="pencil" src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
-      </div>
-      <p class="proxima"> {{profile.location}} </p>
-      <!-- {{profile._id}} -->
-      <h2 class="proxima heavy-font"> {{profile.title}} </h2>
-
-
-      <!-- <button @click="deleteDoc(profile._id)"> Delete </button> -->
-      <img :src="profile.imageUrl" alt="">
-      <br>
-
-      <br>
-
-
-      <!-- comments section loop start -->
-   
-   
-      <ul class="reply-parent">
-  <li v-for="reply in replies" :key=index class="grid-list">
-    <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
-      {{reply.comment}} </p>
-      <!-- <p> {{profile._id}} </p> -->
-    <p>{{reply.post_id}}</p>
-  </li>
-</ul>
-
-
-<!-- comments section loop end -->
-      <div id="replyToComment">
-        <input class="replies" id="replyCommentBox" type="text" v-model="replyValues.comment">
-        <button @click="insertReply(profile._id), reply.post_id=profile._id" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
-            alt=""></button>
         <br>
       </div>
-      <!-- comments section end -->
+    </div>
+    <!-- update docutment section end -->
 
+    <!-- list items section loop start -->
+    <ul v-if="mainContentPosts">
+      <li v-for="profile, index in profiles" :key=index class="grid-list">
+        <div class="postersName">
+          <h3 class="proxima">Guy Nameson</h3>
+          <button class="pencil"
+            @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
+            <img class="pencil" src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
+        </div>
+        <p class="proxima"> {{profile.location}} </p>
+        <!-- {{profile._id}} -->
+        <h2 class="proxima heavy-font"> {{profile.title}} </h2>
+
+
+        <!-- <button @click="deleteDoc(profile._id)"> Delete </button> -->
+        <img :src="profile.imageUrl" alt="">
+        <br>
+
+        <br>
+
+
+        <!-- comments section loop start -->
+    
+    
+        <ul class="reply-parent">
+    <li v-for="reply, index in replies" :key=index class="grid-list">
+      <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
+        {{reply.comment}} </p>
+        <!-- <p> {{profile._id}} </p> -->
+      <p>{{reply.post_id}}</p>
     </li>
   </ul>
-  <!-- list items loop end -->
 
+
+  <!-- comments section loop end -->
+        <div id="replyToComment">
+          <input class="replies" id="replyCommentBox" type="text" v-model="replyValues.comment">
+          <button @click="insertReply(profile._id), reply.post_id=profile._id" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
+              alt=""></button>
+          <br>
+        </div>
+        <!-- comments section end -->
+
+      </li>
+    </ul>
+    <!-- list items loop end -->
+  </section>
 </template>
 
 
@@ -151,6 +152,7 @@ export default {
       createNewActive: false,
       updateFieldActive: false,
       loginClicked: false,
+      showMain: false,
       profiles: [],
       id: "",
       formValues: {
