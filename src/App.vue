@@ -93,7 +93,7 @@
           <img class="pencil" src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
       </div>
       <p class="proxima"> {{profile.location}} </p>
-      {{profile._id}}
+      <!-- {{profile._id}} -->
       <h2 class="proxima heavy-font"> {{profile.title}} </h2>
 
 
@@ -111,7 +111,7 @@
   <li v-for="reply in replies" :key=index class="grid-list">
     <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
       {{reply.comment}} </p>
-      <p> {{profile._id}} </p>
+      <!-- <p> {{profile._id}} </p> -->
     <p>{{reply.post_id}}</p>
   </li>
 </ul>
@@ -120,7 +120,7 @@
 <!-- comments section loop end -->
       <div id="replyToComment">
         <input class="replies" id="replyCommentBox" type="text" v-model="replyValues.comment">
-        <button @click="insertReply(), reply.post_id=profile._id" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
+        <button @click="insertReply(profile._id), reply.post_id=profile._id" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
             alt=""></button>
         <br>
       </div>
@@ -281,7 +281,8 @@ export default {
     // reply section Post
     insertReply(post_id) {
       this.replyValues.post_id = post_id;
-
+console.log("aaa"+this.replyValues.comment)
+console.log("aaa"+this.replyValues.post_id)
       fetch(replyApi, {
         method: "POST",
         headers: {
