@@ -1,7 +1,9 @@
 <template>
 
+  <login :showMain="this.showMain" @showEvent="showMain=true" />
+
   <!--Login Template-->
-  <div v-if="!showMain" id="loginContainer">
+  <!-- <div v-if="!showMain" id="loginContainer">
 
     <div id="logoContainer">
       <img src="src/assets/ZIPLogoCropped.png" alt="">
@@ -18,7 +20,7 @@
       <button class="loginBtn blue" @click="showMain = true">Log in</button>
     </div>
 
-  </div>
+  </div> -->
   <!--Login Template End-->
 
   <section v-if="showMain">
@@ -146,6 +148,7 @@ const replyApi = "https://ratbashreply.netlify.app/.netlify/functions/api/"
 
 // import post from './components/post.vue'
 import headerComp from './components/headerComp.vue'
+import login from './components/login.vue'
 
 export default {
   data() {
@@ -357,7 +360,7 @@ export default {
       .catch((err) => {
         if (err) throw err;
       });
-  }, components: { headerComp }
+  }, components: { headerComp, login }
 
 
 }
@@ -368,7 +371,7 @@ export default {
 @import url("https://use.typekit.net/kjl5yqv.css");
 
 /* login css here for now */
-#loginContainer {
+/* #loginContainer {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -422,7 +425,7 @@ export default {
   padding: 8px 20px 8px 20px;
   width: 80%;
   margin-bottom: 20px;
-}
+} */
 
 /* login css here for now */
 
