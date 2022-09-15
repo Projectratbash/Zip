@@ -116,7 +116,17 @@
     <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
       {{reply.comment}} </p>
       <!-- <p> {{profile._id}} </p> -->
-    <p>{{reply.post_id}}</p>
+    <!-- <p>{{reply.post_id}}</p> -->
+
+
+    <ul>
+      
+      
+      <li v-for="(pstMsg, i) in postMessages[post._id]" :key="i"> {{pstMsg.comment}}
+
+    </li>
+   -->
+  </ul>
   </li>
 </ul>
 
@@ -125,7 +135,7 @@
   <!-- comments section loop end -->
         <div id="replyToComment">
           <input class="replies" id="replyCommentBox" type="text" v-model="replyValues.comment">
-          <button @click="insertReply(profile._id), reply.post_id=profile._id" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
+          <button @click="insertReply(profile._id)" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
               alt=""></button>
           <br>
         </div>
@@ -157,8 +167,9 @@ export default {
       createNewActive: false,
       updateFieldActive: false,
       loginClicked: false,
-      showMain: false,
+      showMain: true,
       profiles: [],
+      postMessages: [],
       id: "",
       formValues: {
         username: "",
@@ -189,7 +200,7 @@ export default {
       })
         .then((response) => response.text())
         .then((data) => {
-          console.log(data),
+          // console.log(data),
             this.getAll();
           this.removeInputs();
           this.createNewActive = false
@@ -264,6 +275,9 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.profiles = data,
+          // data.forEach((post) =>{
+          //   this.postMessages[post._id]=this.getPostMessages(post._id)
+          // });
             // this.getAll()
             this.mainContentPosts = true
         })
@@ -288,19 +302,7 @@ export default {
     // reply section Post
     
     // trial code
-    getMessages(post_id) {
-      this.msglist = [];
-      if (post_id) {
-        let singlePost = [];
-        this.allMessages.forEach((element) => {
-          if (element.post_id == post_id) {
-            singlePost.push(element);
-          }
-        });
-        this.msglist = singlePost;
-      }
-    },
-
+    
     getPostMessages(post_id) {
         let singlePost = [];
         this.allMessages.forEach((element) => {
@@ -315,6 +317,7 @@ export default {
 
     insertReply(post_id) {
       this.replyValues.post_id = post_id;
+      console.log(this.replyValues)
       fetch(replyApi, {
         method: "POST",
         headers: {
@@ -324,9 +327,9 @@ export default {
       })
         .then((response) => response.text())
         .then((data) => {
-          console.log(data),
+          // console.log(data),
             this.getReplies();
-            this.replyValues.comment = ""
+            // this.replyValues.comment = ""
 
         })
         .catch((err) => {
@@ -340,7 +343,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.replies = data
-     console.log(data)
+    //  console.log(data)
         })
         .catch((err) => {
           if (err) throw err;
@@ -355,7 +358,7 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          // console.log(data)
           this.replyValues.comment = data.comment
           this.replyValues.post_id = data.post_id
         })
