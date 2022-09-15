@@ -7,11 +7,11 @@
       <img src="src/assets/ZIPLogoCropped.png" alt="">
     </div>
 
-    <div v-if="!login" class="btnContainer" @click="login = true">
+    <div v-if="!loginClicked" class="btnContainer" @click="loginClicked = true">
       <button class="loginBtn blue">Log in</button>
       <button class="loginBtn blue">Sign up</button>
     </div>
-    <div v-if="login" class="btnContainer">
+    <div v-if="loginClicked" class="btnContainer">
       <p id="loginText">Login</p>
       <input class="loginInput" placeholder="Username" type="text">
       <input class="loginInput" placeholder="Password" type="text">
@@ -150,7 +150,7 @@ export default {
       mainContentPosts: true,
       createNewActive: false,
       updateFieldActive: false,
-      login: false,
+      loginClicked: false,
       profiles: [],
       id: "",
       formValues: {
@@ -281,8 +281,8 @@ export default {
     // reply section Post
     insertReply(post_id) {
       this.replyValues.post_id = post_id;
-console.log("aaa"+this.replyValues.comment)
-console.log("aaa"+this.replyValues.post_id)
+// console.log("aaa"+this.replyValues.comment)
+// console.log("aaa"+this.replyValues.post_id)
       fetch(replyApi, {
         method: "POST",
         headers: {
