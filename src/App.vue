@@ -116,7 +116,7 @@
     <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
       {{reply.comment}} </p>
       <!-- <p> {{profile._id}} </p> -->
-    <!-- <p>{{reply.post_id}}</p> -->
+    <p>{{reply.post_id}}</p>
   </li>
 </ul>
 
@@ -286,10 +286,35 @@ export default {
 
 
     // reply section Post
+    
+    // trial code
+    getMessages(post_id) {
+      this.msglist = [];
+      if (post_id) {
+        let singlePost = [];
+        this.allMessages.forEach((element) => {
+          if (element.post_id == post_id) {
+            singlePost.push(element);
+          }
+        });
+        this.msglist = singlePost;
+      }
+    },
+
+    getPostMessages(post_id) {
+        let singlePost = [];
+        this.allMessages.forEach((element) => {
+          if (element.post_id == post_id) {
+            singlePost.push(element);
+          }
+        });
+        return singlePost;
+      },
+ // trial code
+
+
     insertReply(post_id) {
       this.replyValues.post_id = post_id;
-// console.log("aaa"+this.replyValues.comment)
-// console.log("aaa"+this.replyValues.post_id)
       fetch(replyApi, {
         method: "POST",
         headers: {
