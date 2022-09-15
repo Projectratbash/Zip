@@ -112,7 +112,7 @@
     <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
       {{reply.comment}} </p>
       <!-- <p> {{profile._id}} </p> -->
-    <p>{{reply.post_id}}</p>
+    <!-- <p>{{reply.post_id}}</p> -->
   </li>
 </ul>
 
@@ -294,6 +294,7 @@ export default {
         .then((data) => {
           console.log(data),
             this.getReplies();
+            this.replyValues.comment = ""
 
         })
         .catch((err) => {
