@@ -121,11 +121,9 @@
 
     <ul>
       
-      
-      <li v-for="(pstMsg, i) in postMessages[post._id]" :key="i"> {{pstMsg.comment}}
-
-    </li>
-   -->
+<!--       
+      <li v-for="(pstMsg, i) in postMessages[post._id]" :key="i"> {{pstMsg.comment}} </li> -->
+  
   </ul>
   </li>
 </ul>
@@ -167,7 +165,7 @@ export default {
       createNewActive: false,
       updateFieldActive: false,
       loginClicked: false,
-      showMain: true,
+      showMain: false,
       profiles: [],
       postMessages: [],
       id: "",
