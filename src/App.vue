@@ -2,27 +2,6 @@
 
   <login :showMain="this.showMain" @showEvent="showMain=true" />
 
-  <!--Login Template-->
-  <!-- <div v-if="!showMain" id="loginContainer">
-
-    <div id="logoContainer">
-      <img src="src/assets/ZIPLogoCropped.png" alt="">
-    </div>
-
-    <div v-if="!loginClicked" class="btnContainer" @click="loginClicked = true">
-      <button class="loginBtn blue">Log in</button>
-      <button class="loginBtn blue">Sign up</button>
-    </div>
-    <div v-if="loginClicked" class="btnContainer">
-      <p id="loginText">Login</p>
-      <input class="loginInput" placeholder="Username" type="text">
-      <input class="loginInput" placeholder="Password" type="text">
-      <button class="loginBtn blue" @click="showMain = true">Log in</button>
-    </div>
-
-  </div> -->
-  <!--Login Template End-->
-
   <section v-if="showMain">
     <!-- header declaration -->
     <headerComp />
@@ -36,7 +15,7 @@
             class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
           <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
-          <button> <img src="./assets/refreshIcon.svg" alt="" class="icons"></button>
+          <button> <img src="./assets/refreshIcon.svg" alt="" @click="logoutBtn()" class="icons"></button>
         </div>
       </div>
     </div>
@@ -50,7 +29,7 @@
       <div class="mainFormStyling">
         <h3>Create new post</h3>
 
-        <input type="text" placeholder="Title" v-model="formValues.title">
+        <input type="text" placeholder="Title" maxlength="17" v-model="formValues.title">
         <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
         <input type="text" placeholder="Location" v-model="formValues.location">
         <div class="formBtnFlex">
@@ -185,7 +164,9 @@ export default {
   },
   methods: {
 
-
+    logoutBtn() {
+                window.location.reload(true);
+            },
     
     //Post aka insert the item
     insertDoc() {
@@ -396,64 +377,6 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url("https://use.typekit.net/kjl5yqv.css");
 
-/* login css here for now */
-/* #loginContainer {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-image: url(./assets/loginBgImg.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: bottom;
-}
-
-#loginContainer img {
-  width: 70%;
-  margin: 0 10px 27px 0;
-}
-
-#logoContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  height: 300px;
-  background-color: black;
-  border-radius: 50%;
-  margin: 10vh 0 10vh 0;
-}
-
-#loginText {
-  color: white;
-  font-weight: 1000;
-}
-
-.btnContainer {
-  display: flex;
-  flex-direction: column;
-  ;
-  align-items: center;
-}
-
-.loginBtn {
-  color: white;
-  border: none;
-  padding: 8px 50px 8px 50px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-}
-
-.loginInput {
-  border: rgba(25, 134, 163, 1) solid 2px;
-  border-radius: 5px;
-  padding: 8px 20px 8px 20px;
-  width: 80%;
-  margin-bottom: 20px;
-} */
-
-/* login css here for now */
 
 /* header section */
 #header {
@@ -511,7 +434,7 @@ div {
   font-weight: 400;
   font-style: normal;
   padding-left: 1.75rem;
-  margin: 0
+  margin: 0;
 }
 
 .bold {
@@ -601,6 +524,10 @@ li img {
 #create-section {
   background-color: rgb(12, 194, 194);
   padding: 8px 0 8px 0;
+  position:sticky;
+  position:-webkit-sticky;
+  top: 80px;
+  width: 100vw;
 
 }
 
