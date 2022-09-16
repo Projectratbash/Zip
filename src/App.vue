@@ -110,24 +110,12 @@
 
       <!-- comments section loop start -->
    
-   
-      <ul class="reply-parent">
-  <li v-for="reply in replies" :key=index class="grid-list">
-    <p class="replies"> <span class="bold"> Kate Marshall </span> <br>
-      {{reply.comment}} </p>
-      <!-- <p> {{profile._id}} </p> -->
-    <!-- <p>{{reply.post_id}}</p> -->
+<ul class="reply-parent">
+      <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i"> 
+            <p class="replies"> <span class="bold"> Kate Marshall </span> <br> 
+        {{pstMsg.comment}} </p> </li>
 
-
-    <ul>
-      
-<!--       
-      <li v-for="(pstMsg, i) in postMessages[post._id]" :key="i"> {{pstMsg.comment}} </li> -->
-  
-  </ul>
-  </li>
 </ul>
-
 
 
   <!-- comments section loop end -->
@@ -165,7 +153,7 @@ export default {
       createNewActive: false,
       updateFieldActive: false,
       loginClicked: false,
-      showMain: false,
+      showMain: true,
       profiles: [],
       postMessages: [],
       id: "",
@@ -301,15 +289,17 @@ export default {
     
     // trial code
     
-    getPostMessages(post_id) {
-        let singlePost = [];
-        this.allMessages.forEach((element) => {
-          if (element.post_id == post_id) {
-            singlePost.push(element);
-          }
-        });
-        return singlePost;
-      },
+    // getPostMessages(post_id) {
+    //     let singlePost = [];
+    //     this.allMessages.forEach((element) => {
+    //       if (element.post_id == post_id) {
+    //         singlePost.push(element);
+    //       }
+    //     });
+    //     return singlePost;
+    //   },
+
+
  // trial code
 
 
@@ -321,6 +311,8 @@ export default {
         headers: {
           "Content-Type": "application/json"
         },
+
+
         body: JSON.stringify(this.replyValues)
       })
         .then((response) => response.text())
@@ -341,7 +333,12 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.replies = data
-    //  console.log(data)
+           this.postMessages = this.replies.reduce((results, msg) => {
+            results[msg.post_id] = results[msg.post_id] || [];
+            results[msg.post_id].push(msg);
+            return results;
+          });
+     console.log(data)
         })
         .catch((err) => {
           if (err) throw err;
