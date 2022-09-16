@@ -241,10 +241,6 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.profiles = data,
-          // data.forEach((post) =>{
-          //   this.postMessages[post._id]=this.getPostMessages(post._id)
-          // });
-            // this.getAll()
             this.getReplies()
             this.mainContentPosts = true
         })
@@ -260,28 +256,7 @@ export default {
     },
 
 
-
-
-
-    // reply section methods
-
-
-    // reply section Post
-    
-    // trial code
-    
-    // getPostMessages(post_id) {
-    //     let singlePost = [];
-    //     this.allMessages.forEach((element) => {
-    //       if (element.post_id == post_id) {
-    //         singlePost.push(element);
-    //       }
-    //     });
-    //     return singlePost;
-    //   },
-
-
- // trial code
+ // Reply section methods start
 
 
     insertReply(post_id) {
@@ -345,6 +320,10 @@ export default {
     },
 
   },
+// Reply section methods end
+
+
+
 
   mounted() {
     fetch(api)
@@ -364,7 +343,11 @@ export default {
       .catch((err) => {
         if (err) throw err;
       });
-  }, components: { headerComp, login }
+
+      this.getReplies()
+  }, 
+  
+  components: { headerComp, login }
 
 
 }
