@@ -3,6 +3,7 @@
   <login :showMain="this.showMain" @showEvent="showMain=true" />
 
   <section v-if="showMain">
+    
     <!-- header declaration -->
     <headerComp />
     <!-- header declaration  -->
@@ -23,7 +24,6 @@
 
 
     <!-- Vic's add a post section -->
-    <!-- <post :createNewActive="this.createNewActive" :editState="editState" :formValues="this.formValues" @call-insertDoc="insertDoc"/> -->
 
     <div v-if="createNewActive" class="flexCenter">
       <div class="mainFormStyling">
@@ -131,7 +131,7 @@ export default {
       createNewActive: false,
       updateFieldActive: false,
       loginClicked: false,
-      showMain: true,
+      showMain: false,
       profiles: [],
       postMessages: [],
       id: "",
@@ -597,16 +597,9 @@ li img {
 
 @media screen and (max-width: 900px) {
 
-  /* #header img {
-    max-height: 10vw;
-    padding: 2vw 10vw 2vw 5vw;
-  } */
-
   ul {
     display: grid;
     grid-template-columns: 1fr;
-    /* grid-template-rows: 400px 400px; */
-    grid-gap: 1.5em;
     padding: 0%;
   }
 
