@@ -109,7 +109,6 @@
 
 
       <!-- comments section loop start -->
-   
 <ul class="reply-parent">
       <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i"> 
             <p class="replies"> <span class="bold"> Kate Marshall </span> <br> 
@@ -265,6 +264,7 @@ export default {
           //   this.postMessages[post._id]=this.getPostMessages(post._id)
           // });
             // this.getAll()
+            this.getReplies()
             this.mainContentPosts = true
         })
         .catch((err) => {
@@ -319,7 +319,7 @@ export default {
         .then((data) => {
           // console.log(data),
             this.getReplies();
-            // this.replyValues.comment = ""
+            this.replyValues.comment = ""
 
         })
         .catch((err) => {
