@@ -89,7 +89,7 @@
 
       <!-- comments section loop start -->
 <ul class="reply-parent">
-      <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i"> 
+      <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i" class="commentLi"> 
             <p class="replies"> <span class="bold"> Kate Marshall </span> <br> 
         {{pstMsg.comment}} </p> </li>
 
@@ -98,7 +98,7 @@
 
   <!-- comments section loop end -->
         <div id="replyToComment">
-          <input class="replies" id="replyCommentBox" type="text" v-model="replyValues.comment">
+          <input class="repliesInput" id="replyCommentBox" type="text" v-model="replyValues.comment">
           <button @click="insertReply(profile._id)" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
               alt=""></button>
           <br>
@@ -433,6 +433,7 @@ div {
   padding-right: 1.75rem;
   display: flex;
   flex-direction: column;
+  grid-gap: 0px;
 }
 
 /* post reply styling */
@@ -442,6 +443,15 @@ div {
   border-radius: 20px;
   padding: 5px 15px 5px 15px;
   border: none;
+  margin: 0px 0px 21px 0px;
+}
+.repliesInput {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  padding: 5px 15px 5px 15px;
+  border: none;
+  margin: 0;
 }
 
 /* reply to posts styling */
