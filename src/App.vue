@@ -89,16 +89,25 @@
 
       <!-- comments section loop start -->
 <ul class="reply-parent">
-      <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i" class="commentLi"> 
-            <p class="replies"> <span class="bold"> Kate Marshall </span> <br> 
-        {{pstMsg.comment}} </p> </li>
-
+      <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i"> 
+            <p class="replies"> <span class="bold"> Kate Marshall: </span> <br>
+        {{pstMsg.comment}} </p> 
+      </li>
 </ul>
 
 
   <!-- comments section loop end -->
         <div id="replyToComment">
-          <input class="repliesInput" id="replyCommentBox" type="text" v-model="replyValues.comment">
+
+          <input 
+          v-bind:value="replyValues.comment"
+          v-on:input="msgBoxInput = $event.target.value"
+          class="repliesInput"
+           id="replyCommentBox" 
+           type="text">
+
+
+
           <button @click="insertReply(profile._id)" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
               alt=""></button>
           <br>
@@ -135,6 +144,7 @@ export default {
       profiles: [],
       postMessages: [],
       id: "",
+      msgBoxInput: "",
       formValues: {
         username: "",
         title: "",
@@ -150,7 +160,6 @@ export default {
     }
   },
   methods: {
-
     logoutBtn() {
                 window.location.reload(true);
             },
@@ -261,6 +270,7 @@ export default {
 
     insertReply(post_id) {
       this.replyValues.post_id = post_id;
+      this.replyValues.comment = this.msgBoxInput;
       console.log(this.replyValues)
       fetch(replyApi, {
         method: "POST",
@@ -275,12 +285,11 @@ export default {
         .then((data) => {
           // console.log(data),
             this.getReplies();
-            this.replyValues.comment = ""
-
         })
         .catch((err) => {
           if (err) throw err;
         })
+        this.replyValues.comment = ""
     },
 
 
@@ -321,8 +330,6 @@ export default {
 
   },
 // Reply section methods end
-
-
 
 
   mounted() {
@@ -434,6 +441,8 @@ div {
   display: flex;
   flex-direction: column;
   grid-gap: 0px;
+  overflow: scroll;
+  height: 60px;
 }
 
 /* post reply styling */
@@ -443,7 +452,7 @@ div {
   border-radius: 20px;
   padding: 5px 15px 5px 15px;
   border: none;
-  margin: 0px 0px 21px 0px;
+  margin: 0px 0px 10px 0px;
 }
 .repliesInput {
   padding: 20px;
@@ -461,6 +470,7 @@ div {
   padding-right: 1.75rem;
   padding-bottom: 15px;
   justify-content: space-between;
+  padding-top: 15px;
 }
 
 #replyCommentBox {
@@ -494,6 +504,7 @@ ul {
   /* grid-template-rows: 400px 400px; */
   grid-gap: 1.5em;
   padding: 20px;
+  padding-top: 0;
 }
 
 li {
