@@ -345,6 +345,7 @@ export default {
       });
 
       this.getReplies()
+      insertReply(profile._id)
   }, 
   
   components: { headerComp, login }
