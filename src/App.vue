@@ -70,7 +70,7 @@
   <ul v-if="mainContentPosts">
     <li v-for="profile in profiles" :key=index class="grid-list">
       <div class="postersName">
-        <h3 class="proxima">Guy Nameson</h3>
+        <h3 class="proxima">Guest</h3>
         <button class="pencil"
           @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
           <img class="pencil" src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
@@ -89,13 +89,14 @@
 
       <!-- comments section loop start -->
 <ul class="reply-parent">
+
+  <li v-if="!postMessages[profile._id]" id="greyedOut"> Be the first to comment.  </li>
+
       <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i"> 
-            <p class="replies"> <span class="bold"> Kate Marshall: </span> <br>
+            <p class="replies"> <span class="bold"> {{replyPostersName}} </span> <br>
         {{pstMsg.comment}} </p> 
       </li>
 </ul>
-
-
   <!-- comments section loop end -->
         <div id="replyToComment">
 
@@ -106,10 +107,9 @@
            id="replyCommentBox" 
            type="text">
 
-
-
-          <button @click="insertReply(profile._id)" class="icons"> <img class="icons" src="./assets/send-svgrepo-com(1).svg"
-              alt=""></button>
+          <button @click="insertReply(profile._id)" class="icons"> 
+            <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt="">
+          </button>
           <br>
         </div>
         <!-- comments section end -->
@@ -121,11 +121,8 @@
 </template>
 
 
-
-
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
-
 const replyApi = "https://ratbashreply.netlify.app/.netlify/functions/api/"
 
 
@@ -141,6 +138,7 @@ export default {
       updateFieldActive: false,
       loginClicked: false,
       showMain: false,
+      replyPostersName: "Guest",
       profiles: [],
       postMessages: [],
       id: "",
@@ -155,7 +153,7 @@ export default {
       replies: [],
       replyValues: {
         comment: "",
-        post_id:""
+        post_id:"",
       }
     }
   },
@@ -283,7 +281,6 @@ export default {
       })
         .then((response) => response.text())
         .then((data) => {
-          // console.log(data),
             this.getReplies();
         })
         .catch((err) => {
@@ -602,9 +599,11 @@ li img {
   margin: 0;
   padding: 0;
 }
-
 /* button styling end*/
 
+#greyedOut{
+  color: rgb(182, 182, 182);
+}
 
 /* align items to center class*/
 .flexCenter {
