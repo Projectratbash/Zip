@@ -5,7 +5,7 @@
 
   <section v-if="showMain">
     
-    <!-- header declaration -->
+    <!-- header declaration - Jacob -->
     <headerComp />
     <!-- header declaration  -->
 
@@ -177,7 +177,7 @@ export default {
       })
         .then((response) => response.text())
         .then((data) => {
-          // console.log(data),
+          
             this.getAll();
           this.removeInputs();
           this.createNewActive = false
