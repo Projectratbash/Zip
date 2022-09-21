@@ -105,9 +105,10 @@
           v-on:input="msgBoxInput = $event.target.value"
           class="repliesInput"
            id="replyCommentBox" 
-           type="text">
+           type="text"
+           @keyup="(isreplybtnenable = msgBoxInput.length  ? false : true)">
 
-          <button @click="insertReply(profile._id)" class="icons"> 
+          <button :disabled="isreplybtnenable" @click="insertReply(profile._id)" class="icons"> 
             <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt="">
           </button>
           <br>
@@ -138,6 +139,7 @@ export default {
       updateFieldActive: false,
       loginClicked: false,
       showMain: false,
+      isreplybtnenable: true,
       replyPostersName: "Guest",
       profiles: [],
       postMessages: [],
@@ -213,7 +215,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log(data)
-          this.formValues.title = data.title
+          // this.formValues.title = data.title
           this.formValues.imageUrl = data.imageUrl
           this.formValues.location = data.location
 
@@ -267,6 +269,7 @@ export default {
 
 
     insertReply(post_id) {
+      console.log(this.isreplybtnenable)
       this.replyValues.post_id = post_id;
       this.replyValues.comment = this.msgBoxInput;
       console.log(this.replyValues)
@@ -287,6 +290,8 @@ export default {
           if (err) throw err;
         })
         this.replyValues.comment = ""
+        this.msgBoxInput = "",
+        this.isreplybtnenable = true
     },
 
 
