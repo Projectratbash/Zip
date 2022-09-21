@@ -1,6 +1,7 @@
 <template>
 
-  <login :showMain="this.showMain" @showEvent="showMain=true" />
+  <login :showMain="this.showMain" @showEvent="showMain=true"/>
+  
 
   <section v-if="showMain">
     
@@ -23,7 +24,7 @@
     <!-- navbar end -->
 
 
-    <!-- Vic's add a post section -->
+    <!-- Ed's add a post section -->
 
     <div v-if="createNewActive" class="flexCenter">
       <div class="mainFormStyling">
@@ -106,7 +107,7 @@
           class="repliesInput"
            id="replyCommentBox" 
            type="text"
-           @keydown="(isreplybtnenable = msgBoxInput.length  ? false : true)
+           @keydown="(isreplybtnenable = msgBoxInput = !''  ? false : true)
            ">
 
           <button :disabled="isreplybtnenable" @click="insertReply(profile._id)" class="icons"> 
