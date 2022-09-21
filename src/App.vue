@@ -217,7 +217,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log(data)
-          // this.formValues.title = data.title
+          this.formValues.title = data.title
           this.formValues.imageUrl = data.imageUrl
           this.formValues.location = data.location
 
