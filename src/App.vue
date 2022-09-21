@@ -106,7 +106,8 @@
           class="repliesInput"
            id="replyCommentBox" 
            type="text"
-           @keyup="(isreplybtnenable = msgBoxInput.length  ? false : true)">
+           @keydown="(isreplybtnenable = msgBoxInput.length  ? false : true)
+           ">
 
           <button :disabled="isreplybtnenable" @click="insertReply(profile._id)" class="icons"> 
             <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt="">
