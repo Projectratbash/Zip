@@ -16,15 +16,10 @@
         <button @click="createNewActive = true, updateFieldActive = false, mainContentPosts=false, removeInputs()"> <img
             class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
-<<<<<<< HEAD
-          <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
 
 
-          <button> <img src="./assets/refreshIcon.svg" alt="" @click="getAll()" class="icons"></button>
-=======
    <button id="zip-padding" class="bold">  <a href="https://zip.org.nz/">  &nbsp; ZIP website &nbsp; </a></button>
-          <button> <img src="./assets/refreshIcon.svg" alt="" @click="logoutBtn()" class="icons"></button>
->>>>>>> 7c32ae738e89900138d64e9585749942bb4aa443
+          <button> <img src="./assets/refreshIcon.svg" alt="" @click="getAll()" class="icons"></button>
         </div>
       </div>
     </div>
