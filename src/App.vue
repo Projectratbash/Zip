@@ -16,7 +16,7 @@
         <button @click="createNewActive = true, updateFieldActive = false, mainContentPosts=false, removeInputs()"> <img
             class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
-          <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
+   <button id="zip-padding" class="bold">  <a href="https://zip.org.nz/">  &nbsp; ZIP website &nbsp; </a></button>
           <button> <img src="./assets/refreshIcon.svg" alt="" @click="logoutBtn()" class="icons"></button>
         </div>
       </div>
@@ -399,8 +399,18 @@ export default {
 #zip-padding {
   margin-right: 3vw;
   padding-left: 30px;
+  text-decoration:none;
 }
 
+a {
+  text-decoration: none;
+  color: #2CB6B4;
+}
+
+a :visted {
+text-decoration: none;
+
+}
 
 /* black div styling */
 div {
