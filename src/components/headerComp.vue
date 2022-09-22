@@ -32,7 +32,7 @@
     .profileContainer {
         width: 50px;
         height: 50px;
-        background-image: url("src/assets/ProfilePlaceholder.png");
+        background-image: url("src/assets/profile.png");
         background-size: cover;
         background-repeat: no-repeat;
         border-radius: 50%;
