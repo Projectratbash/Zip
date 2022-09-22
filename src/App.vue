@@ -17,7 +17,9 @@
             class="icons" src="./assets/plusIcon.svg" alt=""> </button>
         <div id="nav-right">
           <button id="zip-padding" class="bold">&nbsp; ZIP website &nbsp; </button>
-          <button> <img src="./assets/refreshIcon.svg" alt="" @click="logoutBtn()" class="icons"></button>
+
+
+          <button> <img src="./assets/refreshIcon.svg" alt="" @click="getAll()" class="icons"></button>
         </div>
       </div>
     </div>
@@ -162,9 +164,6 @@ export default {
     }
   },
   methods: {
-    logoutBtn() {
-                window.location.reload(true);
-            },
     
     //Post aka insert the item
     insertDoc() {
