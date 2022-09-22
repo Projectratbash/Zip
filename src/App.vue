@@ -125,7 +125,7 @@ export default {
       createNewActive: false,
       updateFieldActive: false,
       loginClicked: false,
-      showMain: true,
+      showMain: false,
       isreplybtnenable: true,
       replyPostersName: "Guest",
       profiles: [],
@@ -628,7 +628,7 @@ li img {
   .formBtn {
     width: 40%;
   }
-/* Mobil view only changes end here */
+/* Mobil view only changes start here */
 
 }
 </style>
