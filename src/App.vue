@@ -31,7 +31,6 @@
     <div v-if="createNewActive" class="flexCenter">
       <div class="mainFormStyling">
         <h3>Create new post</h3>
-
         <input type="text" placeholder="Title" maxlength="17" v-model="formValues.title">
         <input type="text" placeholder="ImageUrl" v-model="formValues.imageUrl">
         <input type="text" placeholder="Location" v-model="formValues.location">
