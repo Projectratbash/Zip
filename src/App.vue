@@ -1,13 +1,14 @@
 <template>
 
-  <login :showMain="this.showMain" @showEvent="showMain=true"/>
-  
+  <!-- import login component -->
+  <login :showMain="this.showMain" @showEvent="showMain=true" />
+
 
   <section v-if="showMain">
-    
-    <!-- header declaration - Jacob -->
+
+    <!-- header declaration start -->
     <headerComp />
-    <!-- header declaration  -->
+    <!-- header end  -->
 
 
     <!-- navbar start -->
@@ -18,7 +19,7 @@
         <div id="nav-right">
 
 
-   <button id="zip-padding" class="bold">  <a href="https://zip.org.nz/">  &nbsp; ZIP website &nbsp; </a></button>
+          <button id="zip-padding" class="bold"> <a href="https://zip.org.nz/"> &nbsp; ZIP website &nbsp; </a></button>
           <button> <img src="./assets/refreshIcon.svg" alt="" @click="getAll()" class="icons"></button>
         </div>
       </div>
@@ -27,7 +28,6 @@
 
 
     <!-- Ed's add a post section -->
-
     <div v-if="createNewActive" class="flexCenter">
       <div class="mainFormStyling">
         <h3>Create new post</h3>
@@ -43,7 +43,7 @@
     <!--add a post section end-->
 
 
-    <!-- update docutment section start -->
+    <!-- update docutment section start -Ed -->
     <div class="flexCenter" v-if="updateFieldActive">
       <div class="mainFormStyling">
         <h3>Edit post</h3>
@@ -54,64 +54,48 @@
         <input type="text" placeholder="Location" v-model="formValues.location">
 
         <div class="formBtnFlex">
-
           <button class="formBtn black" @click="updateFieldActive = false, mainContentPosts=true"> Cancel</button>
-
           <button @click="updateDoc(), updateFieldActive=false" class="formBtn blue"> Save changes </button>
         </div>
-
         <button @click="deleteDoc(id), updateFieldActive=false" class="formBtn red"> Delete </button>
-
-
-      <br>
-    </div>
-  </div>
-  <!-- update docutment section end -->
-
-  <!-- list items section loop start -->
-  <ul v-if="mainContentPosts">
-    <li v-for="profile in profiles" :key=index class="grid-list">
-      <div class="postersName">
-        <h3 class="proxima">Guest</h3>
-        <button class="pencil"
-          @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
-          <img class="pencil" src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
+        <br>
       </div>
-      <p class="proxima"> {{profile.location}} </p>
-      <!-- {{profile._id}} -->
-      <h2 class="proxima heavy-font"> {{profile.title}} </h2>
+    </div>
+    <!-- update docutment section end -->
+
+    <!-- Main post items section loop start -->
+    <ul v-if="mainContentPosts">
+      <li v-for="profile in profiles" :key=index class="grid-list">
+        <div class="postersName">
+          <h3 class="proxima">Guest</h3>
+          <button class="pencil"
+            @click="getDoc(profile._id), updateFieldActive = true, createNewActive = false, mainContentPosts=false ">
+            <img class="pencil" src="./assets/pencil-edit-button-svgrepo-com.svg" /> </button>
+        </div>
+        <p class="proxima"> {{profile.location}} </p>
+        <h2 class="proxima heavy-font"> {{profile.title}} </h2>
+        <img :src="profile.imageUrl" alt="">
+        <br>
+
+        <br>
 
 
-      <!-- <button @click="deleteDoc(profile._id)"> Delete </button> -->
-      <img :src="profile.imageUrl" alt="">
-      <br>
+        <!-- comments section loop start -->
+        <ul class="reply-parent">
 
-      <br>
+          <li v-if="!postMessages[profile._id]" id="greyedOut"> Be the first to comment. </li>
 
-
-      <!-- comments section loop start -->
-<ul class="reply-parent">
-
-  <li v-if="!postMessages[profile._id]" id="greyedOut"> Be the first to comment.  </li>
-
-      <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i"> 
+          <li v-for="(pstMsg, i) in postMessages[profile._id]" :key="i">
             <p class="replies"> <span class="bold"> {{replyPostersName}} </span> <br>
-        {{pstMsg.comment}} </p> 
-      </li>
-</ul>
-  <!-- comments section loop end -->
-        <div id="replyToComment">
+              {{pstMsg.comment}} </p>
+          </li>
+        </ul>
+        <!-- comments section loop end -->
 
-          <input 
-          v-bind:value="replyValues.comment"
-          v-on:input="msgBoxInput = $event.target.value"
-          class="repliesInput"
-           id="replyCommentBox" 
-           type="text"
-           @keydown="(isreplybtnenable = msgBoxInput = !''  ? false : true)
-           ">
-
-          <button :disabled="isreplybtnenable" @click="insertReply(profile._id)" class="icons"> 
+        <div id="replyToPost">
+          <input v-bind:value="replyValues.comment" v-on:input="msgBoxInput = $event.target.value" class="repliesInput"
+            id="replyCommentBox" type="text" @keydown="(isreplybtnenable = msgBoxInput = !''  ? false : true)">
+          <button :disabled="isreplybtnenable" @click="insertReply(profile._id)" class="icons">
             <img class="icons" src="./assets/send-svgrepo-com(1).svg" alt="">
           </button>
           <br>
@@ -120,20 +104,20 @@
 
       </li>
     </ul>
-    <!-- list items loop end -->
+    <!-- Main post items section loop end -->
   </section>
 </template>
 
-
+<!-- Apis, top one is the main posts, second one is replies -->
 <script>
 const api = "https://ratbash-api.netlify.app/.netlify/functions/api/"
 const replyApi = "https://ratbashreply.netlify.app/.netlify/functions/api/"
 
-
-// import post from './components/post.vue'
+// importing of components
 import headerComp from './components/headerComp.vue'
 import login from './components/login.vue'
 
+// Data
 export default {
   data() {
     return {
@@ -158,12 +142,12 @@ export default {
       replies: [],
       replyValues: {
         comment: "",
-        post_id:"",
+        post_id: "",
       }
     }
   },
   methods: {
-    
+
     //Post aka insert the item
     insertDoc() {
       fetch(api, {
@@ -175,8 +159,8 @@ export default {
       })
         .then((response) => response.text())
         .then((data) => {
-          
-            this.getAll();
+
+          this.getAll();
           this.removeInputs();
           this.createNewActive = false
         })
@@ -206,7 +190,7 @@ export default {
         })
     },
 
-    //Get fetch aka find the item
+    //Fetch aka find the item details
     getDoc(id) {
       this.id = id
       fetch(api + id, {
@@ -218,46 +202,44 @@ export default {
           this.formValues.title = data.title
           this.formValues.imageUrl = data.imageUrl
           this.formValues.location = data.location
-
         })
-
         .catch((err) => {
           if (err) throw err;
         })
     },
+
 
     //Delete the item
     deleteDoc(id) {
       fetch(api + id, {
         method: "DELETE",
       })
-
         .then((response) => response.text())
         .then((data) => {
           console.log(data),
             this.getAll();
           this.removeInputs();
-
         })
         .catch((err) => {
           if (err) throw err;
         })
-
     },
 
+    // Gets all the main posts - used so new or updates posts show up straigt away
     getAll() {
       fetch(api)
         .then((response) => response.json())
         .then((data) => {
           this.profiles = data,
             this.getReplies()
-            this.mainContentPosts = true
+          this.mainContentPosts = true
         })
         .catch((err) => {
           if (err) throw err;
         })
     },
 
+    // Removes inouts after user has entered or updated a post
     removeInputs() {
       this.formValues.title = ""
       this.formValues.imageUrl = ""
@@ -265,9 +247,9 @@ export default {
     },
 
 
- // Reply section methods start
+    // Reply section methods start
 
-
+    // Inserts the reply to the correct post
     insertReply(post_id) {
       console.log(this.isreplybtnenable)
       this.replyValues.post_id = post_id;
@@ -278,34 +260,32 @@ export default {
         headers: {
           "Content-Type": "application/json"
         },
-
-
         body: JSON.stringify(this.replyValues)
       })
         .then((response) => response.text())
         .then((data) => {
-            this.getReplies();
+          this.getReplies();
         })
         .catch((err) => {
           if (err) throw err;
         })
-        this.replyValues.comment = ""
-        this.msgBoxInput = "",
+      this.replyValues.comment = ""
+      this.msgBoxInput = "",
         this.isreplybtnenable = true
     },
 
-
+// Gets the replies, used to display them, is also called on load via mounting.
     getReplies() {
       fetch(replyApi)
         .then((response) => response.json())
         .then((data) => {
           this.replies = data
-           this.postMessages = this.replies.reduce((results, msg) => {
+          this.postMessages = this.replies.reduce((results, msg) => {
             results[msg.post_id] = results[msg.post_id] || [];
             results[msg.post_id].push(msg);
             return results;
           });
-     console.log(data)
+          console.log(data)
         })
         .catch((err) => {
           if (err) throw err;
@@ -320,20 +300,18 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data)
           this.replyValues.comment = data.comment
           this.replyValues.post_id = data.post_id
         })
-
         .catch((err) => {
           if (err) throw err;
         })
     },
 
   },
-// Reply section methods end
+  // Reply section methods end
 
-
+// Getting data from database on first load
   mounted() {
     fetch(api)
       .then((response) => response.json())
@@ -352,10 +330,9 @@ export default {
       .catch((err) => {
         if (err) throw err;
       });
+    this.getReplies()
+  },
 
-      this.getReplies()
-  }, 
-  
   components: { headerComp, login }
 
 
@@ -397,16 +374,17 @@ export default {
 #zip-padding {
   margin-right: 3vw;
   padding-left: 30px;
-  text-decoration:none;
+  text-decoration: none;
 }
 
+/* Link styling */
 a {
   text-decoration: none;
   color: #2CB6B4;
 }
 
 a :visted {
-text-decoration: none;
+  text-decoration: none;
 
 }
 
@@ -414,17 +392,6 @@ text-decoration: none;
 div {
   margin: 0;
   padding: 0;
-}
-
-
-
-.postersName {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px 0 10px 0;
-  padding-right: 1.75rem;
-
 }
 
 /* Font stylings */
@@ -445,6 +412,15 @@ div {
   color: white;
 }
 
+/* Styling for the name of post creater */
+.postersName {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 0 10px 0;
+  padding-right: 1.75rem;
+
+}
 
 /* Reply parent div styling */
 .reply-parent {
@@ -466,6 +442,7 @@ div {
   border: none;
   margin: 0px 0px 10px 0px;
 }
+
 .repliesInput {
   padding: 20px;
   background-color: #f5f5f5;
@@ -476,7 +453,7 @@ div {
 }
 
 /* reply to posts styling */
-#replyToComment {
+#replyToPost {
   display: flex;
   padding-left: 1.75rem;
   padding-right: 1.75rem;
@@ -490,10 +467,7 @@ div {
 }
 
 
-
-
 /* Navigation section */
-
 #nav {
   display: flex;
   flex-direction: row;
@@ -513,7 +487,6 @@ div {
 ul {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  /* grid-template-rows: 400px 400px; */
   grid-gap: 1.5em;
   padding: 20px;
   padding-top: 0;
@@ -537,13 +510,14 @@ li img {
 #create-section {
   background-color: rgb(12, 194, 194);
   padding: 8px 0 8px 0;
-  position:sticky;
-  position:-webkit-sticky;
+  position: sticky;
+  position: -webkit-sticky;
   top: 80px;
   width: 100vw;
 
 }
 
+/* Create post section button*/
 #create-section button {
   color: rgb(12, 194, 194);
   border: none;
@@ -614,9 +588,10 @@ li img {
   margin: 0;
   padding: 0;
 }
+
 /* button styling end*/
 
-#greyedOut{
+#greyedOut {
   color: rgb(182, 182, 182);
 }
 
@@ -630,6 +605,7 @@ li img {
   padding-top: 25px;
 }
 
+/* Mobil view only changes start here */
 @media screen and (max-width: 900px) {
 
   ul {
@@ -652,7 +628,7 @@ li img {
   .formBtn {
     width: 40%;
   }
-
+/* Mobil view only changes end here */
 
 }
 </style>
