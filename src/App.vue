@@ -140,7 +140,7 @@ export default {
       createNewActive: false,
       updateFieldActive: false,
       loginClicked: false,
-      showMain: false,
+      showMain: true,
       isreplybtnenable: true,
       replyPostersName: "Guest",
       profiles: [],

@@ -12,7 +12,7 @@
     <div v-if="loginClicked" class="btnContainer">
       <p id="loginText">Login</p>
       <input class="loginInput" id= "namelogin" placeholder="Username" type="text" v-model="nameInput"  @input="getLength" >
-      <input class="loginInput" id="passwordlogin" placeholder="Password" type="text" v-model="myInput" @input="getLength" >
+      <input class="loginInput" id="passwordlogin" placeholder="Password" type="password" v-model="myInput" @input="getLength" >
   
 
     
