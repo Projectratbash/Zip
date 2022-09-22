@@ -230,7 +230,7 @@ export default {
       fetch(api)
         .then((response) => response.json())
         .then((data) => {
-          this.profiles = data,
+          this.profiles = data.reverse(),
             this.getReplies()
           this.mainContentPosts = true
         })
@@ -316,7 +316,7 @@ export default {
     fetch(api)
       .then((response) => response.json())
       .then((data) => {
-        this.profiles = data
+        this.profiles = data.reverse()
       })
       .catch((err) => {
         if (err) throw err;
