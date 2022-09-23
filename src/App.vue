@@ -279,12 +279,13 @@ export default {
       fetch(replyApi)
         .then((response) => response.json())
         .then((data) => {
-          this.replies = data
+          this.replies = data.reverse()
           this.postMessages = this.replies.reduce((results, msg) => {
             results[msg.post_id] = results[msg.post_id] || [];
             results[msg.post_id].push(msg);
             return results;
-          });
+          }, {}
+          );
           console.log(data)
         })
         .catch((err) => {
