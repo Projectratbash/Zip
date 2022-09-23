@@ -331,7 +331,7 @@ export default {
       .catch((err) => {
         if (err) throw err;
       });
-    this.getReplies(post_id)
+    this.getReplies()
   },
 
   components: { headerComp, login }
